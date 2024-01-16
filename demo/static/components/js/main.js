@@ -257,6 +257,7 @@ function disableUI() {
     $('#ex1').slider('disable');
 }
 
+
 $(function () {
     $("#main-ui-submit").click(function () {
         updateResult();
@@ -278,18 +279,6 @@ $(function () {
 
     for (var i = 0; i < image_paths.length; i++) {
         var image_name = image_paths[i];
-        // var excluded = [
-        //     "501_9.png",
-        //     "4_16.png",
-        //     "11_68.png",
-        //     "15_6.png",
-        //     "19_30.png",
-        //     "103_6.png",
-        //     "445_28.png"
-        // ]
-        // if (excluded.includes(image_name)) {
-        //     continue;
-        // }
 
         $("#class-picker").append(
             '<option data-img-src="' + base_path + image_name + '" data-img-alt="' + image_name + '" value="' + (image_name) + '">' + image_name + '</option>'
@@ -348,27 +337,11 @@ $(function () {
 
     $("#class-picker-submit-original").click(function () {
         selected_class = $("#class-picker").val();
-        console.log(selected_class);
-
-        var deferred = $.Deferred();
-
-        $("#refFileInput").on('change', function() {
-            inputVal = $(this).val();
-            var fileName = inputVal.split('\\').pop().split('/').pop();
-            console.log(fileName);
-            deferred.resolve(fileName);
-        });
-
-        $("#refFileInput").trigger('click');
-
-        deferred.done(function(fileName) {
-            p5_input_original.updateImage(base_path + fileName);
-            original_image = selected_class;
-
-            if (palette.length > 0 && original_image != null) {
-                enableUI();
-            }
-        });
+        p5_input_original.updateImage(base_path + selected_class);
+        original_image = selected_class;
+        if (palette.length > 0 && original_image != null) {
+            enableUI();
+        }
     });
 
     $("#palette-eraser").click(function () {
